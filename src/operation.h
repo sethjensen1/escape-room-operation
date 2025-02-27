@@ -4,10 +4,12 @@
 typedef enum { INIT, NOT_TOUCHED, TOUCHED, COMPLETE } operation_state_t;
 
 const bool BUZZER_ON = HIGH;
-const bool BOWTIE_ON = LOW;
+const bool BOWTIE_ON = LOW; // see if this is what turns the led on
+const bool OUR_LED_ON = HIGH;
 
 const bool BUZZER_OFF = !BUZZER_ON;
 const bool BOWTIE_OFF = !BOWTIE_ON;
+const bool OUR_LED_OFF = !OUR_LED_ON;
 
 const bool TWEEZERS_TOUCHED = HIGH;
 const bool TWEEZERS_NOT_TOUCHED = !TWEEZERS_TOUCHED;
@@ -17,10 +19,15 @@ const int numPieces = 7;
 
 const int photodiodes[numPieces] = {36, 39, 34, 35, 32, 33, 25}; // Input pins
 const int threshold_defaults[numPieces] = {900,  900,  3800, 3900,
-                                           3900, 3400, 3400}; // Input pins
+                                           3900, 3400, 3400}; // const thresholds for the photodiodes
+const int smileleds[numPieces] = {26, 27, 14, 4, 16}; // Output pins for LEDS
+
 const int bowtie = 23;
 const int buzzer = 21;
 const int tweezers = 2;
+const int flashTime = 10;
+const int lives = 5;
+const float flashWaitTime = 0.5;
 
 class Operation {
 private:
@@ -35,6 +42,7 @@ private:
   operation_state_t m_currentState;
 
   void updateSmileLeds();
+  void blinkDeadLeds();
 
 public:
   Operation();

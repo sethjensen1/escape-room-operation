@@ -15,6 +15,21 @@ bool DEBUG = true;
 bool timeRemoved = false;
 uint8_t numPiecesLeft = 0;
 
+// Call publishPuzzleStatus once per loop in which a change is detected/made
+void publishPuzzleStatus() {
+  DynamicJsonDocument statusDoc(512);
+  // TODO: (Assignment) Replace this static status document with one that
+  // captures the full current status of your puzzle
+  statusDoc["solved"] = isComplete;
+  statusDoc["dead"] = isDead;
+  statusDoc["lifeInformation"] = lifeStatus;
+  statusDoc["timestamp"] = unixTimestamp(); // Always include the unix timestamp
+                                            // in the status message
+
+  publishMQTT(statusTopic(), statusDoc,
+              true); // In most cases, retain (param 3) should be false. Puzzle
+                     // status is the only case where it should be true
+}
 // Blinker onboardLedBlinker(onboardLedPin, 10, 200, 1000, ONBOARD_LED_ON);
 // Blinker mainLedBlinker(mainLedPin, 10, 200, 1000, LED_ON);
 
@@ -48,7 +63,7 @@ void setup() {
 
 void loop() {
   baseEscapeOSLoop(); // DO NOT REMOVE
-
+  serialln("Did we start the game???");
   gameplay.tick(); // This calls our game play tick function
   lifeStatus = gameplay.getLives();
   isDead = gameplay.getIsDead();
@@ -97,19 +112,3 @@ void loop() {
 // Any helper functions for your puzzle can be put here. Arduino will hoist
 // functions in .ino files up to where they are needed unlike standard .cpp
 // files
-
-// Call publishPuzzleStatus once per loop in which a change is detected/made
-void publishPuzzleStatus() {
-  DynamicJsonDocument statusDoc(512);
-  // TODO: (Assignment) Replace this static status document with one that
-  // captures the full current status of your puzzle
-  statusDoc["solved"] = isComplete;
-  statusDoc["dead"] = isDead;
-  statusDoc["lifeInformation"] = lifeStatus;
-  statusDoc["timestamp"] = unixTimestamp(); // Always include the unix timestamp
-                                            // in the status message
-
-  publishMQTT(statusTopic(), statusDoc,
-              true); // In most cases, retain (param 3) should be false. Puzzle
-                     // status is the only case where it should be true
-}

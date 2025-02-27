@@ -15,16 +15,17 @@ Operation::Operation() {
   digitalWrite(bowtie, BOWTIE_OFF);
   digitalWrite(buzzer, BUZZER_OFF);
 
-  m_lives = 10;
+  m_lives = lives;
   m_puzzleComplete = false;
   m_currentState = INIT;
   m_piecesRemaining = numPieces;
 
   for (uint8_t i = 0; i < numPieces; i++) {
-    m_thresholds[i] = threshold_defaults[i];
+    m_thresholds[i] = analogRead(photodiodes[i]);
+    // m_thresholds[i] = threshold_defaults[i];
   }
 
-  // TODO: initialize photodiode thresholds
+  // Done above initialize photodiode thresholds
   // // Find the m_thresholds value needed and update the array
   // // int sensorValue = analogRead(36);  // Read the analog voltage from the
   // // photodiode
@@ -36,7 +37,8 @@ Operation::Operation() {
 
 void Operation::tick() {
   bool edgeTouched = (digitalRead(tweezers) == TWEEZERS_TOUCHED);
-
+  Serial.println("is the edge touched: ");
+  Serial.println(edgeTouched);
   // Sensor logic
   // bool allOff = true;
   bool allPiecesGone = true;
@@ -54,7 +56,7 @@ void Operation::tick() {
   switch (m_currentState) {
   case INIT:
     m_currentState = NOT_TOUCHED;
-    m_lives = 10;
+    m_lives = lives;
     m_dead = false;
     m_puzzleComplete = false;
     // mealy actions (I think)
@@ -70,10 +72,13 @@ void Operation::tick() {
       digitalWrite(bowtie, BOWTIE_ON);
       if (m_lives > 0) {
         m_lives--;
+        Serial.println("The lives are at: ");
+        Serial.println(m_lives);
         updateSmileLeds();
       } else if (!m_dead) {
+        updateSmileLeds();
         m_dead = true;
-        // TODO: Do stuff that happens when you die! Maybe blink all LEDs
+        blinkDeadLeds();
       }
     }
     break;
@@ -92,7 +97,27 @@ void Operation::tick() {
 void Operation::updateSmileLeds() {
   Serial.print("Update the smile LEDs for lives: ");
   Serial.println(m_lives);
-  // TODO: Update the smile LEDs based on lives
+  digitalWrite(smileleds[m_lives], OUR_LED_OFF); // Turns off the led at the life position
+
+}
+
+void Operation:: blinkDeadLeds(){
+  for (int i = 0; i < flashTime; i++){
+    digitalWrite(buzzer, BUZZER_ON);
+    delay(flashWaitTime);
+    digitalWrite(bowtie, BOWTIE_ON);
+    delay(flashWaitTime);
+    digitalWrite(buzzer, BUZZER_OFF);
+    for (int i = 0; i < numPieces; i++){
+      digitalWrite(smileleds[i], OUR_LED_ON);
+    }
+    delay(flashWaitTime);
+    digitalWrite(bowtie, BOWTIE_OFF);
+    delay(flashWaitTime);
+    for (int i = 0; i < numPieces; i++){
+      digitalWrite(smileleds[i], OUR_LED_OFF);
+    }
+  }
 }
 
 uint8_t Operation::getLives() { return m_lives; }
