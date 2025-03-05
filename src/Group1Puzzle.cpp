@@ -23,7 +23,7 @@ void publishPuzzleStatus() {
   statusDoc["solved"] = isComplete;
   statusDoc["dead"] = isDead;
   statusDoc["lifeInformation"] = lifeStatus;
-  statusDoc["timestamp"] = unixTimestamp(); // Always include the unix timestamp
+  statusDoc["timestamp"] = timeClient.getEpochTime(); // Always include the unix timestamp
                                             // in the status message
 
   publishMQTT(statusTopic(), statusDoc,

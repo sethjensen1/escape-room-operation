@@ -1,5 +1,5 @@
-#define WIFI_SSID "Schmidt"
-#define WIFI_PASSWORD "schmidt11"
+#define WIFI_SSID "BYU-WiFi" //BYU-WiFi
+#define WIFI_PASSWORD ""
 #define MQTT_SERVER "broker.escapeos.com"
 #define MQTT_USER "byupe_s25"
 #define MQTT_PASSWORD "cognitive17-Rhythm-ascend-preservation"

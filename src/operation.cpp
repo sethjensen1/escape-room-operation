@@ -37,7 +37,7 @@ Operation::Operation() {
 
 void Operation::tick() {
   bool edgeTouched = (digitalRead(tweezers) == TWEEZERS_TOUCHED);
-  Serial.println("is the edge touched: ");
+  Serial.print("is the edge touched: ");
   Serial.println(edgeTouched);
   // Sensor logic
   // bool allOff = true;
@@ -72,8 +72,10 @@ void Operation::tick() {
       digitalWrite(bowtie, BOWTIE_ON);
       if (m_lives > 0) {
         m_lives--;
-        Serial.println("The lives are at: ");
-        Serial.println(m_lives);
+        if(m_lives == 0){
+          Serial.print("The lives are at: ");
+          Serial.println(m_lives);
+        }
         updateSmileLeds();
       } else if (!m_dead) {
         updateSmileLeds();

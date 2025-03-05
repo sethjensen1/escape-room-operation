@@ -17,12 +17,12 @@ const bool TWEEZERS_NOT_TOUCHED = !TWEEZERS_TOUCHED;
 // number of photodiodes tracking whether a piece is in
 const int numPieces = 7;
 
-const int photodiodes[numPieces] = {36, 39, 34, 35, 32, 33, 25}; // Input pins
+const int photodiodes[numPieces] = {36, 39, 34, 35, 32, 33, 37}; // Input pins
 const int threshold_defaults[numPieces] = {900,  900,  3800, 3900,
                                            3900, 3400, 3400}; // const thresholds for the photodiodes
-const int smileleds[numPieces] = {26, 27, 14, 4, 16}; // Output pins for LEDS
+const int smileleds[numPieces] = {4, 16, 17, 5, 18}; // Output pins for LEDS
 
-const int bowtie = 23;
+const int bowtie = 19;
 const int buzzer = 21;
 const int tweezers = 2;
 const int flashTime = 10;
