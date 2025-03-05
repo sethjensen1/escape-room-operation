@@ -23,8 +23,9 @@ void publishPuzzleStatus() {
   statusDoc["solved"] = isComplete;
   statusDoc["dead"] = isDead;
   statusDoc["lifeInformation"] = lifeStatus;
-  statusDoc["timestamp"] = timeClient.getEpochTime(); // Always include the unix timestamp
-                                            // in the status message
+  statusDoc["timestamp"] =
+      timeClient.getEpochTime(); // Always include the unix timestamp
+                                 // in the status message
 
   publishMQTT(statusTopic(), statusDoc,
               true); // In most cases, retain (param 3) should be false. Puzzle
@@ -63,8 +64,7 @@ void setup() {
 
 void loop() {
   baseEscapeOSLoop(); // DO NOT REMOVE
-  serialln("Did we start the game???");
-  gameplay.tick(); // This calls our game play tick function
+  gameplay.tick();    // This calls our game play tick function
   lifeStatus = gameplay.getLives();
   isDead = gameplay.getIsDead();
   isComplete = gameplay.getPuzzleComplete();
@@ -106,7 +106,7 @@ void loop() {
   // onboardLedBlinker.update();
   // mainLedBlinker.update();
 
-  delay(10); // Do not remove this delay
+  delay(1000); // Do not remove this delay
 }
 
 // Any helper functions for your puzzle can be put here. Arduino will hoist
