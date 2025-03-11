@@ -5,9 +5,9 @@ Operation::Operation() {
   Serial.println("Operation is being initialized in its constructor! ");
 
   // inputs
-  // for (int i = 0; i < numPieces; i++) {
-  // pinMode(photodiodes[i], INPUT);
-  // }
+  for (int i = 0; i < numPieces; i++) {
+  pinMode(photodiodes[i], INPUT);
+  }
   pinMode(tweezers, INPUT_PULLUP);
 
   // outputs
@@ -20,7 +20,7 @@ Operation::Operation() {
   // initialize analog inputs
   // for (uint8_t i = 0; i < numPieces; i++) {
   //   m_thresholds[i] = analogRead(photodiodes[i]);
-  //   // m_thresholds[i] = threshold_defaults[i];
+  //   m_thresholds[i] = threshold_defaults[i];
   // }
 
   // initialize outputs
@@ -49,12 +49,14 @@ void Operation::tick() {
 
   // Check all inputs, if any light values are below the set m_thresholds, then
   // all pieces are *not* gone
-  // for (int i = 0; i < numPieces; i++) {
-  //   if (analogRead(photodiodes[i]) < m_thresholds[i]) {
-  //     allPiecesGone = false;
-  //     break;
-  //   }
-  // }
+  for (int i = 0; i < numPieces; i++) {
+    // if (analogRead(photodiodes[i]) < m_thresholds[i]) {
+    //   allPiecesGone = false;
+    Serial.print("Photodiode: ");
+    Serial.println(analogRead(photodiodes[i]));
+    //   break;
+    // }
+  }
 
   // Transition
   switch (m_currentState) {

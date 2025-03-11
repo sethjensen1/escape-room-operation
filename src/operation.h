@@ -16,14 +16,14 @@ const bool TWEEZERS_NOT_TOUCHED = !TWEEZERS_TOUCHED;
 
 // number of photodiodes tracking whether a piece is in
 const int numSmileLeds = 5;
-const int numPieces = 7;
+const int numPieces = 6;
 const int threshold_defaults[numPieces] = {
     900,  900,  3800, 3900,
-    3900, 3400, 3400}; // default thresholds for the photodiodes
+    3900, 3400}; // default thresholds for the photodiodes
 
 // Pin assignments
 // Input pins
-const int photodiodes[numPieces] = {36, 39, 34, 35, 32, 33, 27};
+const int photodiodes[numPieces] = {36, 39, 34, 35, 32, 33};
 const int tweezers = 4;
 
 // Output pins
