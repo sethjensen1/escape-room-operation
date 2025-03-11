@@ -23,7 +23,7 @@ const int threshold_defaults[numPieces] = {
 
 // Pin assignments
 // Input pins
-const int photodiodes[numPieces] = {36, 39, 34, 35, 32, 33, 37};
+const int photodiodes[numPieces] = {36, 39, 34, 35, 32, 33, 27};
 const int tweezers = 4;
 
 // Output pins
