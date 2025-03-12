@@ -81,6 +81,7 @@ void Operation::tick() {
     break;
   case TOUCHED:
     if (!edgeTouched) {
+      delay(100);
       m_currentState = NOT_TOUCHED;
       digitalWrite(buzzer, BUZZER_OFF);
       digitalWrite(bowtie, BOWTIE_OFF);
