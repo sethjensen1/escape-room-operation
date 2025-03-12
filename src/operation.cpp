@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include "operation.h"
 
-Operation::Operation() {
-  Serial.println("Operation is being initialized in its constructor! ");
+const int DEBUG = false;
 
+Operation::Operation() {
   // inputs
   for (int i = 0; i < NUM_PIECES; i++) {
     pinMode(lightSensors[i], INPUT);
@@ -35,8 +35,10 @@ Operation::Operation() {
 
 void Operation::tick() {
   bool edgeTouched = (digitalRead(tweezers) == TWEEZERS_TOUCHED);
-  Serial.print("is the edge touched: ");
-  Serial.println(edgeTouched);
+  if (DEBUG) {
+    Serial.print("is the edge touched: ");
+    Serial.println(edgeTouched);
+  }
 
   // Check all inputs, if any light values are below the set threshold, then
   // all pieces are *not* gone
