@@ -5,36 +5,30 @@ Operation::Operation() {
   Serial.println("Operation is being initialized in its constructor! ");
 
   // inputs
-  for (int i = 0; i < numPieces; i++) {
-  pinMode(photodiodes[i], INPUT);
+  for (int i = 0; i < NUM_PIECES; i++) {
+    pinMode(lightSensors[i], INPUT);
   }
   pinMode(tweezers, INPUT_PULLUP);
 
   // outputs
   pinMode(buzzer, OUTPUT);
   pinMode(bowtie, OUTPUT);
-  for (int i = 0; i < numSmileLeds; i++) {
+  for (int i = 0; i < NUM_SMILE_LEDS; i++) {
     pinMode(smileLeds[i], OUTPUT);
   }
 
-  // initialize analog inputs
-  // for (uint8_t i = 0; i < numPieces; i++) {
-  //   m_thresholds[i] = analogRead(photodiodes[i]);
-  //   m_thresholds[i] = threshold_defaults[i];
-  // }
-
   // initialize outputs
-  for (int i = 0; i < numSmileLeds; i++) {
+  for (int i = 0; i < NUM_SMILE_LEDS; i++) {
     digitalWrite(smileLeds[i], OUR_LED_ON);
   }
   // updateSmileLeds();
   digitalWrite(bowtie, BOWTIE_OFF);
   digitalWrite(buzzer, BUZZER_OFF);
 
-  m_lives = startingLives;
+  m_lives = STARTING_LIVES;
   m_puzzleComplete = false;
   m_currentState = INIT;
-  m_piecesRemaining = numPieces;
+  m_piecesRemaining = NUM_PIECES;
 
   // delay(100);
 }
@@ -44,25 +38,21 @@ void Operation::tick() {
   Serial.print("is the edge touched: ");
   Serial.println(edgeTouched);
 
-  bool allPiecesGone = false;
-  // bool allPiecesGone = true;
-
-  // Check all inputs, if any light values are below the set m_thresholds, then
+  // Check all inputs, if any light values are below the set threshold, then
   // all pieces are *not* gone
-  for (int i = 0; i < numPieces; i++) {
-    // if (analogRead(photodiodes[i]) < m_thresholds[i]) {
-    //   allPiecesGone = false;
-    Serial.print("Photodiode: ");
-    Serial.println(analogRead(photodiodes[i]));
-    //   break;
-    // }
+  bool allPiecesGone = true;
+  for (int i = 0; i < NUM_PIECES; i++) {
+    if (analogRead(lightSensors[i]) < LIGHT_THRESHOLD) {
+      allPiecesGone = false;
+      break;
+    }
   }
 
   // Transition
   switch (m_currentState) {
   case INIT:
     m_currentState = NOT_TOUCHED;
-    m_lives = startingLives;
+    m_lives = STARTING_LIVES;
     m_dead = false;
     m_puzzleComplete = false;
     // mealy actions (I think)
@@ -71,7 +61,7 @@ void Operation::tick() {
     // check pieces
     if (allPiecesGone) {
       // display something with the LEDs?
-      m_currentState = COMPLETE;
+      m_currentState = GAME_OVER;
       m_puzzleComplete = true;
     } else if (edgeTouched) {
       m_currentState = TOUCHED;
@@ -94,18 +84,18 @@ void Operation::tick() {
       digitalWrite(bowtie, BOWTIE_OFF);
     }
     break;
-  case COMPLETE:
+  case GAME_OVER:
     break;
   }
 }
 
 void Operation::updateSmileLeds() {
   if (m_dead) {
-    for (int i = 0; i < numSmileLeds; i++) {
+    for (int i = 0; i < NUM_SMILE_LEDS; i++) {
       digitalWrite(smileLeds[i], OUR_LED_OFF);
     }
   } else {
-    for (int i = 0; i < numSmileLeds; i++) {
+    for (int i = 0; i < NUM_SMILE_LEDS; i++) {
       if (i <= m_lives) {
         digitalWrite(smileLeds[i], OUR_LED_ON);
       } else {
@@ -116,37 +106,37 @@ void Operation::updateSmileLeds() {
 }
 
 void Operation::blinkDeadLeds() {
-  for (int i = 0; i < flashTime; i++) {
+  for (int i = 0; i < FLASH_TIME; i++) {
     digitalWrite(buzzer, BUZZER_ON);
     digitalWrite(bowtie, BOWTIE_ON);
 
-    for (int j = 0; j < numSmileLeds; j++) {
+    for (int j = 0; j < NUM_SMILE_LEDS; j++) {
       digitalWrite(smileLeds[j], OUR_LED_ON);
     }
 
-    delay(flashWaitTime);
+    delay(FLASH_WAIT_TIME);
 
     digitalWrite(buzzer, BUZZER_OFF);
     digitalWrite(bowtie, BOWTIE_OFF);
-    for (int j = 0; j < numSmileLeds; j++) {
+    for (int j = 0; j < NUM_SMILE_LEDS; j++) {
       digitalWrite(smileLeds[j], OUR_LED_OFF);
     }
 
-    delay(flashWaitTime);
+    delay(FLASH_WAIT_TIME);
 
     digitalWrite(buzzer, BUZZER_ON);
     digitalWrite(bowtie, BOWTIE_ON);
 
-    for (int j = 0; j < numSmileLeds; j++) {
+    for (int j = 0; j < NUM_SMILE_LEDS; j++) {
       digitalWrite(smileLeds[j], OUR_LED_ON);
     }
 
-    delay(flashWaitTime);
+    delay(FLASH_WAIT_TIME);
 
     digitalWrite(buzzer, BUZZER_OFF);
     digitalWrite(bowtie, BOWTIE_OFF);
 
-    for (int j = 0; j < numSmileLeds; j++) {
+    for (int j = 0; j < NUM_SMILE_LEDS; j++) {
       digitalWrite(smileLeds[j], OUR_LED_OFF);
     }
   }

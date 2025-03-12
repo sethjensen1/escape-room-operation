@@ -11,7 +11,7 @@ bool isDead =
 bool isComplete =
     false; // This variable will store if the puzzle has been completed.
 uint8_t lifeStatus = 0;
-bool DEBUG = true;
+bool DEBUG = false;
 bool timeRemoved = false;
 uint8_t numPiecesLeft = 0;
 
@@ -106,7 +106,7 @@ void loop() {
   // onboardLedBlinker.update();
   // mainLedBlinker.update();
 
-  delay(1000); // Do not remove this delay
+  delay(10); // Do not remove this delay
 }
 
 // Any helper functions for your puzzle can be put here. Arduino will hoist
