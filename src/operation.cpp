@@ -6,7 +6,7 @@ const int DEBUG = false;
 Operation::Operation() {
   // inputs
   for (int i = 0; i < NUM_PIECES; i++) {
-    pinMode(lightSensors[i], INPUT);
+    pinMode(hallEffectSensors[i], INPUT);
   }
   pinMode(tweezers, INPUT_PULLUP);
 
@@ -40,11 +40,11 @@ void Operation::tick() {
     Serial.println(edgeTouched);
   }
 
-  // Check all inputs, if any light values are below the set threshold, then
-  // all pieces are *not* gone
+  // Check all piece sensor inputs, if any piece is present, then all pieces are
+  // not gone all pieces are *not* gone
   bool allPiecesGone = true;
   for (int i = 0; i < NUM_PIECES; i++) {
-    if (analogRead(lightSensors[i]) < LIGHT_THRESHOLD) {
+    if (digitalRead(hallEffectSensors[i] == PIECE_PRESENT)) {
       allPiecesGone = false;
       break;
     }

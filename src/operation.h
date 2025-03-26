@@ -14,16 +14,15 @@ const bool OUR_LED_OFF = !OUR_LED_ON;
 const bool TWEEZERS_TOUCHED = LOW;
 const bool TWEEZERS_NOT_TOUCHED = !TWEEZERS_TOUCHED;
 
-// number of lightSensors tracking whether a piece is in
+const bool PIECE_GONE = HIGH;
+const bool PIECE_PRESENT = !PIECE_GONE;
+
 const int NUM_SMILE_LEDS = 5;
 const int NUM_PIECES = 6;
 
-// Seems to be reasonable for now
-const int LIGHT_THRESHOLD = 4000;
-
 // Pin assignments
 // Input pins
-const int lightSensors[NUM_PIECES] = {36, 39, 34, 35, 32, 33};
+const int hallEffectSensors[NUM_PIECES] = {36, 39, 34, 35, 32, 33};
 const int tweezers = 4;
 
 // Output pins
