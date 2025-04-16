@@ -23,16 +23,16 @@ const int NUM_PIECES = 6;
 // Pin assignments
 // Input pins
 const int hallEffectSensors[NUM_PIECES] = {36, 39, 34, 35, 32, 33};
-const int tweezers = 4;
+const int tweezers = 22;
 
 // Output pins
 
 const int buzzer = 2;
 
-const int eyes = 21;
-const int bowtie = 18;
+const int eyes = 19;
+const int bowtie = 15;
 // smile LED rows, in order from bottom to top
-const int smileLeds[NUM_SMILE_LEDS] = {5, 21, 16, 17, 19};
+const int smileLeds[NUM_SMILE_LEDS] = {18, 5, 17, 16, 4};
 
 const int FLASH_TIME = 10;
 const int STARTING_LIVES = 4;
