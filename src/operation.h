@@ -16,6 +16,7 @@ const bool TWEEZERS_NOT_TOUCHED = !TWEEZERS_TOUCHED;
 
 const bool PIECE_GONE = HIGH;
 const bool PIECE_PRESENT = !PIECE_GONE;
+const int LAST_PIECE_DELAY = 1000; // ms
 
 const int NUM_SMILE_LEDS = 5;
 const int NUM_PIECES = 6;
@@ -43,6 +44,7 @@ private:
   uint8_t m_lives;
   bool m_dead;
   bool m_puzzleComplete;
+  int m_gameWonTimer;
 
   uint8_t m_piecesRemaining;
 

@@ -29,6 +29,7 @@ Operation::Operation() {
 
   m_lives = STARTING_LIVES;
   m_puzzleComplete = false;
+  m_gameWonTimer = 0;
   m_currentState = INIT;
   m_piecesRemaining = NUM_PIECES;
 
@@ -64,9 +65,22 @@ void Operation::tick() {
   case NOT_TOUCHED:
     // check pieces
     if (allPiecesGone) {
+      if (m_gameWonTimer == 0) {
+        // start gameWonTimer
+        m_gameWonTimer = millis();
+      } else if ((millis() - m_gameWonTimer) > LAST_PIECE_DELAY) {
+        m_puzzleComplete = true;
+        // disable gameWonTimer
+        m_gameWonTimer = 0;
+      }
+    } else {
+      // disable gameWonTimer
+      m_gameWonTimer = 0;
+    }
+
+    if (m_puzzleComplete == true) {
       // display something with the LEDs?
       m_currentState = GAME_OVER;
-      m_puzzleComplete = true;
     } else if (edgeTouched) {
       m_currentState = TOUCHED;
       digitalWrite(buzzer, BUZZER_ON);
