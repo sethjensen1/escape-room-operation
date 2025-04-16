@@ -14,25 +14,26 @@ const bool OUR_LED_OFF = !OUR_LED_ON;
 const bool TWEEZERS_TOUCHED = LOW;
 const bool TWEEZERS_NOT_TOUCHED = !TWEEZERS_TOUCHED;
 
-// number of lightSensors tracking whether a piece is in
+const bool PIECE_GONE = HIGH;
+const bool PIECE_PRESENT = !PIECE_GONE;
+const int LAST_PIECE_DELAY = 1000; // ms
+
 const int NUM_SMILE_LEDS = 5;
 const int NUM_PIECES = 6;
 
-// Seems to be reasonable for now
-const int LIGHT_THRESHOLD = 4000;
-
 // Pin assignments
 // Input pins
-const int lightSensors[NUM_PIECES] = {36, 39, 34, 35, 32, 33};
+const int hallEffectSensors[NUM_PIECES] = {36, 39, 34, 35, 32, 33};
 const int tweezers = 22;
 
 // Output pins
 
-const int bowtie = 15;
 const int buzzer = 2;
 
+const int eyes = 19;
+const int bowtie = 15;
 // smile LED rows, in order from bottom to top
-const int smileLeds[NUM_SMILE_LEDS] = {4, 16, 17, 5, 18};
+const int smileLeds[NUM_SMILE_LEDS] = {18, 5, 17, 16, 4};
 
 const int FLASH_TIME = 10;
 const int STARTING_LIVES = 4;
@@ -43,6 +44,7 @@ private:
   uint8_t m_lives;
   bool m_dead;
   bool m_puzzleComplete;
+  int m_gameWonTimer;
 
   uint8_t m_piecesRemaining;
 
