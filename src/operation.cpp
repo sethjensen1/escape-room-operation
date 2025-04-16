@@ -11,6 +11,7 @@ Operation::Operation() {
   pinMode(tweezers, INPUT_PULLUP);
 
   // outputs
+  pinMode(eyes, OUTPUT);
   pinMode(buzzer, OUTPUT);
   pinMode(bowtie, OUTPUT);
   for (int i = 0; i < NUM_SMILE_LEDS; i++) {
@@ -18,6 +19,7 @@ Operation::Operation() {
   }
 
   // initialize outputs
+  digitalWrite(eyes, OUR_LED_OFF);
   for (int i = 0; i < NUM_SMILE_LEDS; i++) {
     digitalWrite(smileLeds[i], OUR_LED_ON);
   }
@@ -76,6 +78,7 @@ void Operation::tick() {
         m_dead = true;
         updateSmileLeds();
         blinkDeadLeds();
+        digitalWrite(eyes, OUR_LED_ON);
       }
     }
     break;
@@ -112,6 +115,7 @@ void Operation::blinkDeadLeds() {
   for (int i = 0; i < FLASH_TIME; i++) {
     digitalWrite(buzzer, BUZZER_ON);
     digitalWrite(bowtie, BOWTIE_ON);
+    digitalWrite(eyes, OUR_LED_ON);
 
     for (int j = 0; j < NUM_SMILE_LEDS; j++) {
       digitalWrite(smileLeds[j], OUR_LED_ON);
@@ -121,6 +125,7 @@ void Operation::blinkDeadLeds() {
 
     digitalWrite(buzzer, BUZZER_OFF);
     digitalWrite(bowtie, BOWTIE_OFF);
+    digitalWrite(eyes, OUR_LED_OFF);
     for (int j = 0; j < NUM_SMILE_LEDS; j++) {
       digitalWrite(smileLeds[j], OUR_LED_OFF);
     }
@@ -129,6 +134,7 @@ void Operation::blinkDeadLeds() {
 
     digitalWrite(buzzer, BUZZER_ON);
     digitalWrite(bowtie, BOWTIE_ON);
+    digitalWrite(eyes, OUR_LED_ON);
 
     for (int j = 0; j < NUM_SMILE_LEDS; j++) {
       digitalWrite(smileLeds[j], OUR_LED_ON);

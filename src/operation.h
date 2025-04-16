@@ -27,9 +27,10 @@ const int tweezers = 4;
 
 // Output pins
 
-const int bowtie = 18;
 const int buzzer = 2;
 
+const int eyes = 21;
+const int bowtie = 18;
 // smile LED rows, in order from bottom to top
 const int smileLeds[NUM_SMILE_LEDS] = {5, 21, 16, 17, 19};
 
